@@ -1,6 +1,9 @@
-import React from 'react';
-import { Button, StyleSheet, Text, TextInput, View } from 'react-native';
-import { StackNavigator } from 'react-navigation';
+import React from 'react'
+import { Button, StyleSheet, Text, TextInput, View } from 'react-native'
+import { StackNavigator } from 'react-navigation'
+import { createStore } from 'redux'
+import { Provider } from 'react-redux'
+import reducer from './reducers'
 
 function LabelledInput(props) {
   return (
@@ -31,10 +34,20 @@ function MainScreen(props) {
   )
 }
 
-export default App = StackNavigator({
+const store = createStore(reducer)
+
+const App = StackNavigator({
   Login: {screen: LoginScreen},
   Main: {screen: MainScreen}
 })
+
+export default (props) => {
+  return (
+    <Provider store={store}>
+      <App />
+    </Provider>
+  )
+}
 
 const styles = StyleSheet.create({
   container: {
@@ -45,4 +58,4 @@ const styles = StyleSheet.create({
   formRow: {
     textAlign: 'center'
   }
-});
+})

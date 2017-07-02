@@ -4,8 +4,8 @@ import { Button, StyleSheet, Text, TextInput, View } from 'react-native';
 function LabelledInput(props) {
   return (
     <View>
-      <Text>{props.label}</Text>
-      <TextInput placeholder={props.placeholder} secureTextEntry={props.obscured} />
+      <Text style={styles.formRow}>{props.label}</Text>
+      <TextInput placeholder={props.placeholder} secureTextEntry={props.obscured} style={styles.formRow} />
     </View>
   )
 }
@@ -13,7 +13,7 @@ function LabelledInput(props) {
 class LoginForm extends React.Component {
   render() {
     return (
-      <View>
+      <View style={styles.container}>
         <LabelledInput label="Username:" placeholder="john" />
         <LabelledInput label="Password:" placeholder="mypass" obscured />
         <Button title="Login" />
@@ -33,8 +33,10 @@ export default class App extends React.Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
+    alignItems: 'stretch',
     justifyContent: 'center',
   },
+  formRow: {
+    textAlign: 'center'
+  }
 });

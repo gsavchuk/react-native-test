@@ -11,9 +11,10 @@ function LabelledInput({label, placeholder, obscured, handler}) {
   )
 }
 
-export function LoginScreen({updateLogin, updatePassword, doLogin}) {
+export function LoginScreen({loginFailed, updateLogin, updatePassword, doLogin}) {
   return (
     <View style={styles.loginScreen}>
+      { loginFailed && <Text style={[styles.formRow, {color: 'red'}]} >Login failed</Text> }
       <LabelledInput label="Username:" placeholder="john" handler={updateLogin} />
       <LabelledInput label="Password:" placeholder="mypass" obscured handler={updatePassword} />
       <Button title="Login" onPress={doLogin} />

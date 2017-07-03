@@ -1,5 +1,6 @@
 import { combineReducers } from 'redux'
 import * as a from './actions'
+import { router as r } from './containers'
 
 const LOGINS = {
   'user1': 'pass1',
@@ -9,31 +10,42 @@ const LOGINS = {
 const isValidUser = ({login, password}) =>
   LOGINS[login] === password
 
+const loginState = r.getStateForAction(r.getActionForPathAndParams('Login'))
+const mainState = r.getStateForAction(r.getActionForPathAndParams('Main'))
+
 function user (state = {
   login: '',
   password: '',
-  loggedIn: false
+  loggedIn: false,
+  loginFailed: false,
+  navState: loginState
 }, action) {
   switch (action.type) {
     case a.UPDATE_LOGIN:
       return {
         ...state,
-        login: action.login
+        login: action.login,
+        loginFailed: false
       }
     case a.UPDATE_PASSWORD:
       return {
         ...state,
-        password: action.password
+        password: action.password,
+        loginFailed: false
       }
     case a.LOGIN:
+      const loggedIn = isValidUser(state)
       return {
         ...state,
-        loggedIn: isValidUser(state)
+        loggedIn,
+        loginFailed: !loggedIn,
+        navState: loggedIn ? mainState : loginState
       }
     case a.LOGOUT:
       return {
         ...state,
-        loggedIn: false
+        loggedIn: false,
+        navState: loginState
       }
     default:
       return state

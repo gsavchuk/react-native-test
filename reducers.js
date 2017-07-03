@@ -1,12 +1,40 @@
 import { combineReducers } from 'redux'
 import * as a from './actions'
 
-function loggedIn (state = false, action) {
+const LOGINS = {
+  'user1': 'pass1',
+  'user2': 'pass2'
+}
+
+const isValidUser = ({login, password}) =>
+  LOGINS[login] === password
+
+function user (state = {
+  login: '',
+  password: '',
+  loggedIn: false
+}, action) {
   switch (action.type) {
+    case a.UPDATE_LOGIN:
+      return {
+        ...state,
+        login: action.login
+      }
+    case a.UPDATE_PASSWORD:
+      return {
+        ...state,
+        password: action.password
+      }
     case a.LOGIN:
-      return isValidUser(action.creds)
+      return {
+        ...state,
+        loggedIn: isValidUser(state)
+      }
     case a.LOGOUT:
-      return false
+      return {
+        ...state,
+        loggedIn: false
+      }
     default:
       return state
   }
@@ -30,7 +58,7 @@ function mainContent (state = {
 }
 
 const rootReducer = combineReducers({
-  loggedIn,
+  user,
   mainContent
 })
 

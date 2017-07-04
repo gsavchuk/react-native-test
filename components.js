@@ -65,7 +65,7 @@ export class MainScreen extends Component {
     return (
       <View style={styles.form}>
         { isFetching && <Text style={styles.center}>Loading...</Text>}
-        { data && convertToRows(data, 0) }
+        { data && convertToRows(data, 0, '') }
         <Button title="Logout" onPress={p.doLogout} />
       </View>
     )

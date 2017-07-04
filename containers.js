@@ -25,20 +25,11 @@ const LoginScreenContainer = (() => {
 })()
 
 const MainScreenContainer = (() => {
-  function mapStateToProps(state) {
-//    console.warn(Object.keys(state.mainContent).join())
-    return {
-      data: state.user // should be mainContent, but it hangs here
-    }
-  }
-  /*
-  const mapStateToProps = state => ({
-    data: state.mainContent
-  })
-*/
+  const mapStateToProps = state => state.mainContent
+
   const mapDispatchToProps = dispatch => ({
     fetchData: () => {
-      dispatch(a.fetchDataIfNeeded())
+      dispatch(a.fetchDataIfNeeded)
     },
     doLogout: () => {
       dispatch({type: a.LOGOUT})

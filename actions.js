@@ -15,18 +15,14 @@ export const updatePassword = password => ({
   password
 })
 
-const requestData = () => ({
-  type: REQUEST_DATA
-})
-
 const receiveData = data => ({
   type: RECEIVE_DATA,
   data,
   receivedAt: Date.now()
 })
 
-const fetchTodayData = () => dispatch => {
-  dispatch(requestData())
+const fetchTodayData = dispatch => {
+  dispatch({type: REQUEST_DATA})
   return fetch('http://calapi.inadiutorium.cz/api/v0/en/calendars/general-en/today')
     .then(response => response.json(),
           error => console.error('error receiving data', error))
@@ -34,18 +30,17 @@ const fetchTodayData = () => dispatch => {
 }
 
 const shouldFetchData = state => {
-  if (!state.data) {
-    return true
-  }
   if (state.isFetching) {
     return false
+  }
+  if (!state.data) {
+    return true
   }
   return state.didInvalidate
 }
 
-export const fetchDataIfNeeded = () => (dispatch, getState) => {
-  console.warn('should fetch data = ' + shouldFetchData(getState().mainContent))
+export const fetchDataIfNeeded = (dispatch, getState) => {
   if (shouldFetchData(getState().mainContent)) {
-    return dispatch(fetchTodayData())
+    return dispatch(fetchTodayData)
   }
 }

@@ -65,7 +65,6 @@ function mainContent (state = {
         didInvalidate: false
       }
     case a.RECEIVE_DATA:
-    console.warn(Object.keys(action.data).join())
       return {
         ...state,
         isFetching: false,

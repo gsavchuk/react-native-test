@@ -4,7 +4,7 @@ import { router as r } from './containers'
 
 const LOGINS = {
   'user1': 'pass1',
-  'user2': 'pass2'
+  'u': 'p'
 }
 
 const isValidUser = ({login, password}) =>
@@ -55,14 +55,23 @@ function user (state = {
 function mainContent (state = {
   isFetching: false,
   didInvalidate: false,
-  data: {}
+  data: null
 }, action) {
   switch (action.type) {
-    case a.FETCH:
+    case a.REQUEST_DATA:
       return {
         ...state,
         isFetching: true,
         didInvalidate: false
+      }
+    case a.RECEIVE_DATA:
+    console.warn(Object.keys(action.data).join())
+      return {
+        ...state,
+        isFetching: false,
+        didInvalidate: false,
+        data: action.data,
+        lastUpdated: action.receivedAt
       }
     default:
       return state

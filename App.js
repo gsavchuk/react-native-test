@@ -1,10 +1,15 @@
 import React from 'react'
-import { createStore } from 'redux'
+import { createStore, applyMiddleware } from 'redux'
 import { Provider } from 'react-redux'
+import thunk from 'redux-thunk'
 import reducer from './reducers'
 import App from './containers'
 
-const store = createStore(reducer)
+const middleware = [ thunk ]
+const store = createStore(
+  reducer,
+  applyMiddleware(...middleware)
+)
 
 const usubscribe = store.subscribe(() => {
   // console.warn(store.getState().user.login)

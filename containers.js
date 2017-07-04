@@ -8,10 +8,45 @@ const LoginScreenContainer = (() => {
   const mapStateToProps = state => ({
     loginFailed: state.user.loginFailed
   })
-  return connect(mapStateToProps, a.mapDispatchToProps)(c.LoginScreen)
+
+  const mapDispatchToProps = dispatch => ({
+    updateLogin: login => {
+      dispatch(a.updateLogin(login))
+    },
+    updatePassword: password => {
+      dispatch(a.updatePassword(password))
+    },
+    doLogin: () => {
+      dispatch({type: a.LOGIN})
+    }
+  })
+
+  return connect(mapStateToProps, mapDispatchToProps)(c.LoginScreen)
 })()
 
-const MainScreenContainer = c.MainScreen
+const MainScreenContainer = (() => {
+  function mapStateToProps(state) {
+//    console.warn(Object.keys(state.mainContent).join())
+    return {
+      data: state.user // should be mainContent, but it hangs here
+    }
+  }
+  /*
+  const mapStateToProps = state => ({
+    data: state.mainContent
+  })
+*/
+  const mapDispatchToProps = dispatch => ({
+    fetchData: () => {
+      dispatch(a.fetchDataIfNeeded())
+    },
+    doLogout: () => {
+      dispatch({type: a.LOGOUT})
+    }
+  })
+
+  return connect(mapStateToProps, mapDispatchToProps)(c.MainScreen)
+})()
 
 const AppNavigator = StackNavigator({
   Login: {screen: LoginScreenContainer},

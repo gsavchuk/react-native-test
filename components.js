@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { Component } from 'react'
 import { Button, StyleSheet, Text, TextInput, View } from 'react-native'
 
 function LabelledInput({label, placeholder, obscured, handler}) {
@@ -22,12 +22,25 @@ export function LoginScreen({loginFailed, updateLogin, updatePassword, doLogin})
   )
 }
 
-export function MainScreen(props) {
-  return (
-    <View>
-      <Text>Main data</Text>
-    </View>
-  )
+export class MainScreen extends Component {
+  componentDidMount() {
+    this.props.fetchData();
+  }
+
+  componentWillReceiveProps(nextProps) {
+    this.props.fetchData();
+  }
+  
+  render() {
+    const p = this.props
+    //const {data} = p
+    return (
+      <View style={styles.loginScreen}>
+        <Text style={styles.formRow}>Main data</Text>
+        <Button title="Logout" onPress={p.doLogout} />
+      </View>
+    )
+  }
 }
 
 const styles = StyleSheet.create({
